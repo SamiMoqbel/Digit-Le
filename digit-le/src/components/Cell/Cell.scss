@@ -1,0 +1,24 @@
+.cell {
+  font-size: 2rem;
+  padding: 0.5rem 1.2rem;
+  border: 2px solid black;
+  border-radius: 5px;
+  margin: 0.5rem;
+}
+
+.disabled {
+  background-color: gray;
+  color: black;
+}
+
+.correct {
+  background-color: green;
+}
+
+.wrong {
+  background-color: lightgray;
+}
+
+.wrong-place {
+  background-color: orange;
+}
