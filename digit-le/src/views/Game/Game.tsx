@@ -1,26 +1,32 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import { Cell } from "../../components";
 import { Gameover } from "../Gameover";
 import { generateRandomDigits } from "../../util/Random";
-import "./GameBoard.scss";
+import { vaildNumber } from "../../util/Validation";
+import "./Game.scss";
 
-export const GameBoard = () => {
-  const digits = 4;
-  const [attempts, setAttempts] = useState<number>(5);
+const difficultySettings = {
+  easy: { digits: 4, maxAttempts: 5 },
+  normal: { digits: 5, maxAttempts: 6 },
+  hard: { digits: 9, maxAttempts: 9 },
+};
+
+export const Game = () => {
+  const { difficulty } = useParams();
+
+  const settings =
+    difficultySettings[difficulty as keyof typeof difficultySettings];
+
+  const [attempts, setAttempts] = useState<number>(settings.maxAttempts);
   const [guessInput, setGuessInput] = useState<string>("");
   const [guesses, setGuesses] = useState<string[]>([]);
   const [answer, setAnswer] = useState<string>("");
   const [won, setWon] = useState<boolean>(false);
-  const [revealedDigits, setRevealedDigits] = useState<string[]>(
-    Array(digits).fill("_")
-  );
-
-  const inputRef = useRef<HTMLInputElement>(null);
-
 
   useEffect(() => {
-    setAnswer(generateRandomDigits(digits));
+    setAnswer(generateRandomDigits(settings.digits));
   }, []);
 
   useEffect(() => {
@@ -35,33 +41,20 @@ export const GameBoard = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyPress);
     };
-  }, [guessInput, answer, guesses, attempts, revealedDigits, won]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setGuessInput(e.target.value);
-  };
+  }, [guessInput, answer, guesses, attempts, won]);
 
   const handleInputButton = () => {
-    if (guessInput.length !== 4) {
+    if (guessInput.length !== settings.digits) {
       toast.error("Invalid input. Please enter 4 digits.");
-    } else if (guessInput.match(/[^0-9]/)) {
+    } else if (vaildNumber(guessInput) === false) {
       toast.error("Invalid input. Please enter only digits.");
     } else if (guessInput === answer) {
-      setRevealedDigits(answer.split(""));
       setWon(true);
     } else {
-      const updatedRevealedDigits = revealedDigits.map((digit, index) => {
-        return answer[index] === guessInput[index] ? guessInput[index] : digit;
-      });
-
-      setRevealedDigits(updatedRevealedDigits);
       setGuesses((prevGuesses) => [...prevGuesses, guessInput]);
       setAttempts((prevAttempt) => prevAttempt - 1);
     }
     setGuessInput("");
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
   };
 
   const getCellStyle: (cell: string, index: number) => string = (
@@ -99,28 +92,12 @@ export const GameBoard = () => {
       {won && <Gameover won={won} />}
       {attempts === 0 && !won && <Gameover won={won} answer={answer} />}
       <div className="game-container">
-        <div className="controls-container">
-          <div className="inputs-container">
-            <input
-              ref={inputRef}
-              className="guessInput-input"
-              type="text"
-              placeholder="0000"
-              value={guessInput}
-              onChange={handleChange}
-            />
-            <button className="guessInput-button" onClick={handleInputButton}>
-              Try!
-            </button>
-          </div>
-          <h2 className="hidden-digits">{revealedDigits.join(" ")}</h2>
-        </div>
         <div className="board-container">
           {guesses.map((row, rowIndex) => renderRow(row, rowIndex))}
 
           {attempts > 0 &&
             (Array.from({ length: attempts }) as string[])
-              .fill("0000")
+              .fill("0".repeat(settings.digits))
               .map((row, rowIndex) => renderRow(row, rowIndex, true))}
         </div>
       </div>

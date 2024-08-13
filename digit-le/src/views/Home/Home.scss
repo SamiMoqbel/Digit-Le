@@ -37,4 +37,14 @@
   border-radius: 5px;
   cursor: pointer;
   text-decoration: none;
+  width: 30%;
+
+  &:hover {
+    background-color: darkgreen;
+  }
+
+  &:active {
+    opacity: 0.8;
+    scale: 0.9;
+  }
 }
