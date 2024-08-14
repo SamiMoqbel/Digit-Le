@@ -11,7 +11,7 @@ function App() {
         <Route index element={<Home />} />
         <Route path="board">
           <Route index element={<Navigate to="/" replace />} />
-          <Route path=":difficulty" element={<Game />} />
+          <Route path=":difficulty/:name" element={<Game />} />
         </Route>
         <Route path="*" element={<Error404 />} />
       </Routes>

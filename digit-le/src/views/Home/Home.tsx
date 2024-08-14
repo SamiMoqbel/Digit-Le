@@ -15,7 +15,7 @@ export const Home = () => {
 
   const handleStartButton = (level: Levels) => {
     if (name) {
-      navigate(`/board/${level}`);
+      navigate(`/board/${level}/${name}`);
     } else {
       toast.error("Please enter your name");
     }
@@ -31,13 +31,22 @@ export const Home = () => {
         value={name}
         onChange={(e) => handleChange(e)}
       />
-      <button onClick={() => handleStartButton("easy")} className="start-button">
+      <button
+        onClick={() => handleStartButton("easy")}
+        className="start-button"
+      >
         Easy Difficulty (4 digits)
       </button>
-      <button onClick={() => handleStartButton("normal")} className="start-button">
+      <button
+        onClick={() => handleStartButton("normal")}
+        className="start-button"
+      >
         Normal Difficulty (5 digits)
       </button>
-      <button onClick={() => handleStartButton("hard")} className="start-button">
+      <button
+        onClick={() => handleStartButton("hard")}
+        className="start-button"
+      >
         Hard Difficulty (9 digits)
       </button>
     </div>
