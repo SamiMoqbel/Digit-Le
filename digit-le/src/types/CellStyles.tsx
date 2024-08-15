@@ -1,1 +1,1 @@
-export type CellStyles = "correct" | "wrong-place" | "wrong" | "disabled"  | "";
+export type CellStyles = "correct" | "misplaced" | "incorrect" | "disabled"  | "";

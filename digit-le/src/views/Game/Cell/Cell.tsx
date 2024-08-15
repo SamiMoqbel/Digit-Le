@@ -1,59 +1,75 @@
-import { useEffect, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import { vaildNumber } from "../../../util/Validate";
 import { CellStyles } from "../../../types/CellStyles";
 import "./Cell.scss";
 
 interface CellProps {
   initialValue?: string;
-  status?: CellStyles;
-  moveNext?: () => void;
+  cellStyle?: CellStyles;
+  moveToCell?: (offset: number) => void;
+  moveToNextRow?: () => void;
   updateBoard?: (value: string) => void;
   validateGuess?: () => void;
+  isLastCell?: boolean;
 }
 
-export const Cell: React.FC<CellProps> = ({
-  initialValue = " ",
-  status = "disabled",
-  moveNext,
-  validateGuess,
-  updateBoard,
-}) => {
-  const [value, setValue] = useState<string>(initialValue);
-  const [style, setStyle] = useState<string>(status);
+export type CellRef = HTMLInputElement;
 
-  useEffect(() => {
-    setStyle(status);
-  }, [status]);
+export const Cell = forwardRef<CellRef, CellProps>(
+  (
+    {
+      initialValue = " ",
+      cellStyle = "disabled",
+      moveToCell,
+      moveToNextRow,
+      validateGuess,
+      updateBoard,
+      isLastCell = false,
+    },
+    ref
+  ) => {
+    const [value, setValue] = useState<string>(initialValue);
+    const [style, setStyle] = useState<string>(cellStyle);
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    const { key } = e;
+    useEffect(() => {
+      setStyle(cellStyle);
+    }, [cellStyle]);
 
-    if (key === "Backspace") {
-      setValue(" ");
-      return;
-    }
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+      const { key } = e;
 
-    if (key === "Enter") {
-      validateGuess?.();
-      moveNext?.();
-      return;
-    }
+      if (key === "Backspace") {
+        setValue(" ");
+        updateBoard?.(" ");
+        moveToCell?.(-1);
+        return;
+      }
 
-    if (vaildNumber(key) === false) {
-      return;
-    }
+      if (key === "Enter") {
+        if (value === " ") return;
+        validateGuess?.();
+        moveToNextRow?.();
+        return;
+      }
 
-    setValue(key);
-    updateBoard?.(key);
-  };
+      if (vaildNumber(key) === true) {
+        setValue(key);
+        updateBoard?.(key);
+        if (!isLastCell) {
+          moveToCell?.(1);
+        }
+      }
+    };
 
-  return (
-    <input
-      className={`cell ${style}`}
-      value={value}
-      onKeyDown={handleKeyDown}
-      onChange={() => {}}
-      disabled={status === "disabled"}
-    />
-  );
-};
+    return (
+      <input
+        className={`cell ${style}`}
+        value={value}
+        ref={ref}
+        onKeyDown={handleKeyDown}
+        onChange={() => {}}
+        disabled={cellStyle === "disabled"}
+      />
+    );
+  }
+);
