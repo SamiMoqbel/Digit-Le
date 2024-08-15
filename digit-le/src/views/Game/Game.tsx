@@ -8,8 +8,8 @@ import "./Game.scss";
 
 const difficultySettings = {
   easy: { digits: 4, maxAttempts: 5 },
-  normal: { digits: 5, maxAttempts: 6 },
-  hard: { digits: 9, maxAttempts: 9 },
+  normal: { digits: 5, maxAttempts: 5 },
+  hard: { digits: 9, maxAttempts: 6 },
 };
 
 export const Game = () => {
@@ -37,10 +37,10 @@ export const Game = () => {
     <>
       {won && <Gameover won={won} />}
       {attemptsLeft === 0 && !won && <Gameover won={won} answer={answer} />}
-      <div className="game-header">
-        <Header name={name!} difficulty={difficulty!} settings={settings} />
-      </div>
       <div className="game-container">
+        <div className="game-header">
+          <Header name={name!} difficulty={difficulty!} settings={settings} />
+        </div>
         <Board
           settings={settings}
           attemptsLeft={attemptsLeft}
