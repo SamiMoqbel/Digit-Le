@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Cell } from "../Cell";
-import "./Board.scss";
 import { CellStyles } from "../../../types/CellStyles";
+import "./Board.scss";
 
 interface BoardProps {
   settings: { digits: number; maxAttempts: number };

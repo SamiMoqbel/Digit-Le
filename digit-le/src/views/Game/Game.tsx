@@ -29,10 +29,6 @@ export const Game = () => {
     setAnswer(generateRandomDigits(settings.digits));
   }, []);
 
-  useEffect(() => {
-    console.log(answer);
-  }, [answer]);
-
   return (
     <>
       {won && <Gameover won={won} />}
@@ -43,8 +39,8 @@ export const Game = () => {
         </div>
         <Board
           settings={settings}
-          attemptsLeft={attemptsLeft}
           setWon={setWon}
+          attemptsLeft={attemptsLeft}
           setAttempts={setAttemptsLeft}
           answer={answer}
         />

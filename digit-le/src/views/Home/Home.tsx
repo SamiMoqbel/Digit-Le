@@ -1,6 +1,7 @@
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { LevelButton } from "../../components/LevelButton";
 import "./Home.scss";
 
 type Levels = "easy" | "normal" | "hard";
@@ -9,11 +10,11 @@ export const Home = () => {
   const [name, setName] = useState("");
   const navigate = useNavigate();
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
 
-  const handleStartButton = (level: Levels) => {
+  const handleLevelButton = (level: Levels) => {
     if (name) {
       navigate(`/board/${level}/${name}`);
     } else {
@@ -31,24 +32,15 @@ export const Home = () => {
         value={name}
         onChange={(e) => handleChange(e)}
       />
-      <button
-        onClick={() => handleStartButton("easy")}
-        className="start-button"
-      >
+      <LevelButton onClick={() => handleLevelButton("easy")}>
         Easy Difficulty (4 digits)
-      </button>
-      <button
-        onClick={() => handleStartButton("normal")}
-        className="start-button"
-      >
+      </LevelButton>
+      <LevelButton onClick={() => handleLevelButton("normal")}>
         Normal Difficulty (5 digits)
-      </button>
-      <button
-        onClick={() => handleStartButton("hard")}
-        className="start-button"
-      >
+      </LevelButton>
+      <LevelButton onClick={() => handleLevelButton("hard")}>
         Hard Difficulty (9 digits)
-      </button>
+      </LevelButton>
     </div>
   );
 };
