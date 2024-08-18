@@ -15,9 +15,9 @@ export const Header: React.FC<HeaderProps> = ({
     <>
       <h1 className="game-title">Digit-Le</h1>
       <p className="game-subtitle">
-        {name?.toUpperCase()} - {difficulty!.toUpperCase()} - {settings.digits}{" "}
+        {name?.toUpperCase()} - {difficulty!.toUpperCase()}- {settings.digits}{" "}
         digits
       </p>
-    </>
+    </> 
   );
 };

@@ -97,6 +97,7 @@ export const Board: React.FC<BoardProps> = ({
       }
     });
 
+    // Sami : First Check if its correct then check if its misplaced or incorrect (Duplicate cases)
     updatedBoard[rowIndex].forEach((cell, index) => {
       if (updatedBoard[rowIndex][index].cellStyle !== "correct") {
         const misplacedIndex = answerArray.indexOf(cell.value);

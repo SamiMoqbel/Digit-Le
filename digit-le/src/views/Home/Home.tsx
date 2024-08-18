@@ -10,7 +10,7 @@ export const Home = () => {
   const [name, setName] = useState("");
   const navigate = useNavigate();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
 
@@ -30,7 +30,7 @@ export const Home = () => {
         type="text"
         placeholder="Enter your name"
         value={name}
-        onChange={(e) => handleChange(e)}
+        onChange={(e) => handleNameChange(e)}
       />
       <LevelButton onClick={() => handleLevelButton("easy")}>
         Easy Difficulty (4 digits)
