@@ -15,7 +15,7 @@ export const Home = () => {
   };
 
   const handleLevelButton = (level: Levels) => {
-    if (name) {
+    if (name.trim()) {
       navigate(`/board/${level}/${name}`);
     } else {
       toast.error("Please enter your name");
