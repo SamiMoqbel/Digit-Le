@@ -16,9 +16,11 @@ export const Gameover: React.FC<GameoverProps> = ({ won, answer }) => {
 
   return (
     <Modal>
-      <h1 className="result-title">Game Over!!</h1>
+      <h1 className="result-title">{won ? "You Did It!!" : "Hard Luck!!"}</h1>
       <p className="result-desc">{won ? wonMessage : lostMessage}</p>
-      <button className="result-button" onClick={handlePlayButton}>Play Again</button>
+      <button className="result-button" onClick={handlePlayButton}>
+        Play Again
+      </button>
     </Modal>
   );
 };

@@ -1,0 +1,1 @@
+export type CellStyles = "correct" | "misplaced" | "incorrect" | "disabled"  | "";

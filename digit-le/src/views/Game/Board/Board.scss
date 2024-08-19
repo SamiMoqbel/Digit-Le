@@ -1,0 +1,19 @@
+.board {
+  &-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    align-items: start;
+    width: 100%;
+    height: 80%;
+    padding: 1.4rem 0;
+  }
+
+  &-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 0.6rem;
+  }
+}
