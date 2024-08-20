@@ -16,6 +16,10 @@ export const Home = () => {
 
   const handleLevelButton = (level: Levels) => {
     if (name.trim()) {
+      if (!name.match(/^[a-zA-Z]+$/)) {
+        toast.error("Please enter a valid name");
+        return;
+      }
       navigate(`/board/${level}/${name}`);
     } else {
       toast.error("Please enter your name");
